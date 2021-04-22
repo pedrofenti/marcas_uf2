@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import TodoList from './TodoList';
 import './index.css';
+import "./TodoList.css";
+import "./ItemList.css";
 
 ReactDOM.render(
 <div> 

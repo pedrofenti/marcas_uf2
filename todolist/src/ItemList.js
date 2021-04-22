@@ -14,8 +14,7 @@ class ItemList extends Component { //clase ItemList que hereda de Component
 	
 	render() {
     return (
-      <li>{this.props.item} <button className="delete"
-			onClick={this.removeItem}>X</button></li>
+      <li>{this.props.item} <button className="delete" onClick={this.removeItem}>X</button></li>
     );
   }
 }

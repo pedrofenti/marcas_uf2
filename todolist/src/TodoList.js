@@ -1,8 +1,6 @@
 import React, { Component } from 'react'; //importa React y el componente del modulo
 import ItemList from './ItemList';
 
-import ".TodoList.css"
-
 class TodoList extends Component { //clase TodoList que hereda de Component
 	
 	//constructor del objeto
@@ -18,6 +16,7 @@ class TodoList extends Component { //clase TodoList que hereda de Component
 		
 		//variable para las ids
 		this.last_id = 0;
+		this.num = 0;
 
     //vinculamos la funcion addItem a nuestro objeto
 		this.addItem = this.addItem.bind(this);
@@ -37,6 +36,7 @@ class TodoList extends Component { //clase TodoList que hereda de Component
 		document.getElementById("text-task").focus();
 
 		this.last_id++;
+		this.num++;
 	
 		//hacemos el push de su valor en el array del estado
 		this.state.items.push({id: this.last_id, item:text_v});
@@ -58,7 +58,9 @@ class TodoList extends Component { //clase TodoList que hereda de Component
 				break;
 			}
 		}	
-	
+
+		this.num--;
+
 		//funcion para realizar los cambios (internamente llamamos a render();)
 		this.setState({ items: this.state.items  });	
 	
@@ -76,9 +78,9 @@ class TodoList extends Component { //clase TodoList que hereda de Component
 	
     return (
       <div className="TodoList">
-        <p>Num Items: NUM</p>
+        <p>Num Items: {this.num}</p>
 				<form onSubmit={this.addItem}>
-				<p><input type="text" id="text-task" />
+				<p><input type="text" id="text-task" placeholder="Add a Todo" />
 				<button type="submit">Añadir</button></p>
 				</form>
 				<ul>
