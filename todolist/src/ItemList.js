@@ -1,5 +1,8 @@
 import React, { Component } from 'react'; //importa React y el componente del modulo
 
+import { Button } from '@material-ui/core';
+import  DeleteIcon  from '@material-ui/icons/Delete';
+
 class ItemList extends Component { //clase ItemList que hereda de Component
   
 	constructor (props){
@@ -14,7 +17,7 @@ class ItemList extends Component { //clase ItemList que hereda de Component
 	
 	render() {
     return (
-      <li>{this.props.item} <button className="delete" onClick={this.removeItem}>X</button></li>
+      <li>{this.props.item} <Button className="delete" variant="contained" color="secondary"  onClick={this.removeItem}>{<DeleteIcon />}</Button></li>
     );
   }
 }

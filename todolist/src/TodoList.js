@@ -1,6 +1,9 @@
 import React, { Component } from 'react'; //importa React y el componente del modulo
 import ItemList from './ItemList';
 
+import { Button } from '@material-ui/core';
+import { TextField } from '@material-ui/core';
+
 class TodoList extends Component { //clase TodoList que hereda de Component
 	
 	//constructor del objeto
@@ -80,8 +83,8 @@ class TodoList extends Component { //clase TodoList que hereda de Component
       <div className="TodoList">
         <p>Num Items: {this.num}</p>
 				<form onSubmit={this.addItem}>
-				<p><input type="text" id="text-task" placeholder="Add a Todo" />
-				<button type="submit">Añadir</button></p>
+				<p><TextField type="text" id="text-task" autoComplete="off" placeholder="Add a Todo"/>
+				<Button color="primary" variant="contained" type="submit">Añadir</Button></p>
 				</form>
 				<ul>
 					{list}					
