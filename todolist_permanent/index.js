@@ -47,11 +47,28 @@ http.createServer( (req, res) => {
 			let data = Buffer.concat(body).toString();
 
 			console.log(data);
+			
+			let item_data = JSON.parse(data);
+
+			todolist_db.collection("items").insertOne({
+				id: item_data.id,
+				item: item_data.item
+			});
 
 		});
 
-	}
+		res.end();
 
-	res.end();
+	}
+	else if (req.url == "/get_items") {
+		
+		let list = todolist_db.collection("items").find({}).toArray();
+				list.then( (data) => {
+
+						res.writeHead( 200, {'Content-Type':'text/json' });
+						res.write( JSON.stringify(data));
+						res.end();
+				});
+	}
 
 }).listen(8081);

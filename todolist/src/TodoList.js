@@ -12,7 +12,8 @@ class TodoList extends Component { //clase TodoList que hereda de Component
 		//super es el padre
 		super(props); 
 
-		//estado
+		//estado de la lista de items "actual" "en ese momento" 
+		//al inicializarla esta vacia
 		this.state = {
 			items : []
 		};
@@ -23,7 +24,21 @@ class TodoList extends Component { //clase TodoList que hereda de Component
 
     //vinculamos la funcion addItem a nuestro objeto
 		this.addItem = this.addItem.bind(this);
+    //vinculamos la funcion removeItem a nuestro objeto
 		this.removeItem = this.removeItem.bind(this);
+
+		
+		fetch("//192.168.1.196:8081/get_items")
+				.then(res => res.json())
+				.then(data => {
+					data.forEach(item => {
+						this.state.items.push({
+							id: item.id,
+							item: item.item
+							});
+						});
+
+		this.setState({ items: this.state.items });
 
 		}
 	
@@ -43,11 +58,32 @@ class TodoList extends Component { //clase TodoList que hereda de Component
 	
 		//hacemos el push de su valor en el array del estado
 		this.state.items.push({id: this.last_id, item:text_v});
-	
+
 		//funcion para realizar los cambios (internamente llamamos a render();)
-		this.setState({ items: this.state.items  });	
+		this.setState({ 
+				items: this.state.items  
+		});	
+
+
+
+		//cogemos los datos y los convertimos a un objeto JS y los enviamos a la ip y puerto para verlos
+		let item_data = JSON.stringify({
+				id: this.last_id,
+				item: text_v
+		});
+
+			fetch("//192.168.1.196:8081/submit", {
+					method: "POST",
+					headers: {
+							'Content-Type':'text/json'
+					},
+					body: item_data
+			});
+
 		}
 
+
+	//funcion para borrar los items de la web
 	removeItem(id_item) {
 	
 		console.log("Remove" + id_item);	
