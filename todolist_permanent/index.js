@@ -46,7 +46,7 @@ http.createServer( (req, res) => {
 
 			let data = Buffer.concat(body).toString();
 
-			console.log(data);
+			//console.log(data);
 			
 			let item_data = JSON.parse(data);
 
@@ -69,6 +69,33 @@ http.createServer( (req, res) => {
 						res.write( JSON.stringify(data));
 						res.end();
 				});
+
 	}
+	else if(req.url == "/remove"){
+		console.log("remove");
+
+		let body = [];
+
+		req.on("data", chunk => {
+
+			body.push(chunk);
+
+		}).on("end", () => {
+
+			let data = Buffer.concat(body).toString();
+
+			//console.log(data);
+
+			let item_data = JSON.parse(data);
+
+			todolist_db.collection("items").deleteOne({
+				id: item_data.id,
+				item: item_data.item
+			});
+
+		});
+		
+		res.end();
+    }
 
 }).listen(8081);

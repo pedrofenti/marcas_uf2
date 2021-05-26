@@ -16,7 +16,7 @@ class TodoList extends Component { //clase TodoList que hereda de Component
 		//al inicializarla esta vacia
 		this.state = {
 			items : []
-		};
+		}
 		
 		//variable para las ids
 		this.last_id = 0;
@@ -38,10 +38,12 @@ class TodoList extends Component { //clase TodoList que hereda de Component
 							});
 						});
 
-		this.setState({ items: this.state.items });
+					this.setState({ items: this.state.items });
+
+					});
 
 		}
-	
+
 	//funcion para anyadir en la lista
 	addItem (e) {
 
@@ -63,7 +65,6 @@ class TodoList extends Component { //clase TodoList que hereda de Component
 		this.setState({ 
 				items: this.state.items  
 		});	
-
 
 
 		//cogemos los datos y los convertimos a un objeto JS y los enviamos a la ip y puerto para verlos
@@ -93,10 +94,24 @@ class TodoList extends Component { //clase TodoList que hereda de Component
 
 		for (let i = 0; i < this.state.items.length; i++) {
 			if (this.state.items[i].id === id_item){
+
+				let item_delete = JSON.stringify({ 
+						id: this.state.items[i].id,
+						item: this.state.items[i].item
+				});
+
+        fetch("//192.168.1.196:8081/remove", {
+        		method: "POST",
+            headers:{
+            		'Content-type':'text/json'
+            },
+            body: item_delete
+         });
+
 				this.state.items.splice(i,1);
 				break;
 			}
-		}	
+		}
 
 		this.num--;
 
@@ -117,7 +132,7 @@ class TodoList extends Component { //clase TodoList que hereda de Component
 	
     return (
       <div className="TodoList">
-        <p>Num Items: {this.num}</p>
+        <p>Things to do: {this.num}</p>
 				<form onSubmit={this.addItem}>
 				<p><TextField type="text" id="text-task" autoComplete="off" placeholder="Add a Todo"/>
 				<Button color="primary" variant="contained" type="submit">Añadir</Button></p>
